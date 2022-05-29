@@ -1,4 +1,4 @@
-package com.example.tinder_api.database.model
+package com.example.tinder_api.database.room.model
 
 import androidx.room.Embedded
 import androidx.room.Entity

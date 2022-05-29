@@ -1,8 +1,5 @@
-package com.example.tinder_api.database.model
+package com.example.tinder_api.database.network.responses
 
-import androidx.room.Entity
-
-@Entity
 data class Picture(
     val large: String,
     val medium: String,

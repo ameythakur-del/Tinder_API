@@ -1,8 +1,5 @@
-package com.example.tinder_api.database.model
+package com.example.tinder_api.database.network.responses
 
-import androidx.room.Entity
-
-@Entity
 data class Name(
     val first: String,
     val last: String,

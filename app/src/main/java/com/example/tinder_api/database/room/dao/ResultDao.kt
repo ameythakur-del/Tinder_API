@@ -1,8 +1,8 @@
-package com.example.tinder_api.database.dao
+package com.example.tinder_api.database.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.tinder_api.database.model.Result
+import com.example.tinder_api.database.room.model.Result
 
 @Dao
 interface ResultDao {
