@@ -12,11 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val repository = ItemsRepository(ItemsApi())
 
-        GlobalScope.launch(Dispatchers.Main) {
-            val items = repository.getItems()
-            Toast.makeText(this@MainActivity, items.toString(), Toast.LENGTH_LONG).show()
-        }
     }
 }
