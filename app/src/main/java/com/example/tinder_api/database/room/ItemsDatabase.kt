@@ -8,7 +8,7 @@ import com.example.tinder_api.database.room.dao.ResultDao
 import com.example.tinder_api.database.room.model.*
 
 @Database(entities = [
-    Coordinates::class, Dob::class, Id::class, Info::class, Item::class, Location::class,
+    Coordinates::class, Dob::class, Id::class, Info::class, Location::class,
     Login::class, Name::class, Picture::class, Registered::class, com.example.tinder_api.database.room.model.Result::class, Street::class, Timezone::class,], version = 1, exportSchema = false)
 
 abstract class ItemsDatabase : RoomDatabase() {
@@ -17,25 +17,17 @@ abstract class ItemsDatabase : RoomDatabase() {
 
     companion object {
 
-        @Volatile
-        private var INSTANCE: ItemsDatabase? = null
+        private lateinit var INSTANCE: ItemsDatabase
 
-        fun getInstance(context: Context): ItemsDatabase {
-            synchronized(this) {
-                var instance = INSTANCE
-
-                if (instance == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
+        fun getDatabase(context: Context): ItemsDatabase {
+            synchronized(ItemsDatabase::class.java) {
+                if (!::INSTANCE.isInitialized) {
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
                         ItemsDatabase::class.java,
-                        "items_database"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .build()
-                    INSTANCE = instance
+                        "videos").build()
                 }
-                return instance
             }
+            return INSTANCE
         }
     }
 }

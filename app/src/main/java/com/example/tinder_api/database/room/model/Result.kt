@@ -15,6 +15,8 @@ data class Result(
     val gender: String,
 
     @PrimaryKey(autoGenerate = false)
+
+    @Embedded
     val id: Id,
 
     @Embedded
@@ -31,6 +33,6 @@ data class Result(
     @Embedded
     val picture: Picture,
 
-    @Embedded
+    @Embedded(prefix = "reg_")
     val registered: Registered
 )

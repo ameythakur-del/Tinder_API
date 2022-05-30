@@ -1,11 +1,6 @@
-package com.example.tinder_api.database.room.model
+package com.example.tinder_api.domainModels
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
 data class Login(
-    @PrimaryKey(autoGenerate = false)
     val md5: String,
     val password: String,
     val salt: String,
