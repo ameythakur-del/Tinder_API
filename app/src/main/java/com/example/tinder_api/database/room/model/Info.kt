@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Info(
     @PrimaryKey(autoGenerate = false)
-    val page: Int,
+    var page: Int,
     val results: Int,
     val seed: String,
     val version: String

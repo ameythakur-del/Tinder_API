@@ -11,5 +11,5 @@ import retrofit2.http.*
 interface ResultsApiService {
 
     @GET("api/?results=10")
-    fun getResults(): Deferred<ResultsResponse>
+    fun getResults(): ResultsResponse
 }

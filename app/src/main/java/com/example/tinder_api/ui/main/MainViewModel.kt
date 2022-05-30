@@ -22,11 +22,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      */
     init {
         viewModelScope.launch {
-//            itemsRepository.items
+            itemsRepository.refreshItems()
         }
     }
 
-//    val playlist = itemsRepository.items
+    val playlist = itemsRepository.items
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

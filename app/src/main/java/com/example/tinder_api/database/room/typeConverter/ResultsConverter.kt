@@ -4,23 +4,30 @@ import androidx.room.TypeConverter
 import com.example.tinder_api.database.room.model.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 import java.util.*
 
 
 class ResultConverter {
-    @TypeConverter
-    fun stringToListServer(data: String?): List<Result?>? {
-        if (data == null) {
-            return Collections.emptyList()
+
+    @TypeConverter // note this annotation
+    fun fromOptionValuesList(optionValues: List<Result>?): String? {
+        if (optionValues == null) {
+            return null
         }
-        val listType: Type = object :
-            TypeToken<List<Result?>?>() {}.type
-        return Gson().fromJson<List<Result?>>(data, listType)
+        val gson = Gson()
+        val type = object :
+            TypeToken<List<Result>?>() {}.type
+        return gson.toJson(optionValues, type)
     }
 
-    @TypeConverter
-    fun listServerToString(someObjects: List<Result?>?): String? {
-        return Gson().toJson(someObjects)
+    @TypeConverter // note this annotation
+    fun toOptionValuesList(optionValuesString: String?): List<Result?>? {
+        if (optionValuesString == null) {
+            return null
+        }
+        val gson = Gson()
+        val type = object :
+            TypeToken<List<Result?>?>() {}.type
+        return gson.fromJson(optionValuesString, type)
     }
 }

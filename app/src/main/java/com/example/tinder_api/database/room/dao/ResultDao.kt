@@ -12,9 +12,10 @@ import kotlinx.coroutines.Deferred
 
 @Dao
 interface ResultDao {
-//    @Query("SELECT * from items")
-//    fun get(): Item
+
+    @Query("SELECT * from results")
+    fun get(): LiveData<Result>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg item: Item)
+    fun insertAll(vararg results: List<Result>)
 }
