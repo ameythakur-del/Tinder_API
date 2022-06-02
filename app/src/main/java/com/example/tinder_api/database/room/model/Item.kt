@@ -10,7 +10,7 @@ data class Item constructor(
     val info: Info,
 
     @TypeConverters(ResultConverter::class)
-    val results: List<Result>
+    var results: List<Result>
 )
 
 

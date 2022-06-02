@@ -12,7 +12,7 @@ data class Location(
     @Embedded
     val coordinates: Coordinates,
     val country: String,
-    val postcode: Double,
+    val postcode: String,
     val state: String,
 
     @Embedded(prefix = "Street_")

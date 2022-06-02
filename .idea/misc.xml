@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Tinder_API/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/Tinder_API/app/src/main/res/layout/main_activity.xml" value="0.16354166666666667" />
         <entry key="..\:/AndroidStudioProjects/Tinder_API/app/src/main/res/layout/main_fragment.xml" value="0.16354166666666667" />
+        <entry key="..\:/AndroidStudioProjects/Tinder_API/app/src/main/res/layout/result.xml" value="0.1" />
       </map>
     </option>
   </component>

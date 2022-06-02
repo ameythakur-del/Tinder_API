@@ -9,12 +9,10 @@ data class Result(
     val cell: String,
 
     @Embedded
-    val dob: Dob,
+    var dob: Dob,
 
     val email: String,
     val gender: String,
-
-    @PrimaryKey(autoGenerate = false)
 
     @Embedded
     val id: Id,
@@ -25,6 +23,7 @@ data class Result(
     @Embedded
     val login: Login,
 
+    @PrimaryKey(autoGenerate = false)
     @Embedded
     val name: Name,
     val nat: String,
@@ -34,5 +33,7 @@ data class Result(
     val picture: Picture,
 
     @Embedded(prefix = "reg_")
-    val registered: Registered
+    val registered: Registered,
+
+    var status: String
 )

@@ -1,15 +1,18 @@
 package com.example.tinder_api.ui.main
 
 import android.app.Application
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.*
-import com.example.tinder_api.database.network.ResultsApi
-import com.example.tinder_api.database.network.responses.ResultsResponse
 import com.example.tinder_api.database.repository.Repository
 import com.example.tinder_api.database.room.ItemsDatabase
-import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.tinder_api.database.room.model.Item
+import com.example.tinder_api.database.room.model.Name
+import com.example.tinder_api.database.room.model.Result
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
+import java.lang.reflect.Array.get
+
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,24 +20,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val database = ItemsDatabase.getDatabase(application)
     private val itemsRepository = Repository(database)
 
+    var status = MutableLiveData<String?>()
+
     /**
      * init{} is called immediately when this ViewModel is created.
      */
+    val handler = CoroutineExceptionHandler { _, exception ->
+
+    }
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             itemsRepository.refreshItems()
         }
     }
 
-    val playlist = itemsRepository.items
+    var playlist: LiveData<Item> = itemsRepository.items
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return MainViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
+    fun onAcceptClicked(result: Result){
+        viewModelScope.launch() {
+            itemsRepository.setStatusAccepted(result.cell)
+        }
+    }
+
+    fun onDeclineClicked(result: Result){
+
+        viewModelScope.launch() {
+            itemsRepository.setStatusDeclined(result.cell)
         }
     }
 }

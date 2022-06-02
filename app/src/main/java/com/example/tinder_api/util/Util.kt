@@ -2,6 +2,9 @@ package com.example.tinder_api.util
 
 enum class ApiStatus { LOADING, ERROR, DONE }
 
+const val ACCEPTED="Accepted";
+const val DECLINED ="Declined"
+const val UNDECIDED = "NULL"
 //fun toast(message: String?) {
 //    Toast.makeText(MyApplication.instance, message, Toast.LENGTH_LONG).show()
 //}

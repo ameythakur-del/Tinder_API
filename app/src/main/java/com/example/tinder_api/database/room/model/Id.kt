@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class Id(
     @PrimaryKey(autoGenerate = false)
     val name: String,
-    val value: String
+    val value: String?
 )
