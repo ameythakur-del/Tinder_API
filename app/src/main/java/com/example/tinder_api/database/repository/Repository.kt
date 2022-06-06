@@ -12,8 +12,6 @@ import kotlinx.coroutines.withContext
 class Repository(private val database: ItemsDatabase){
 
     var items = database.resultDao.get()
-
-
     var rs : MutableList<Result> = mutableListOf()
 
     suspend fun refreshItems() {
@@ -53,28 +51,28 @@ class Repository(private val database: ItemsDatabase){
         }
     }
 
-    suspend fun setStatusAccepted(cell: String){
 
+    suspend fun setStatusAccepted(cell: String){
         if(rs.isEmpty()){
+            print("vgvgchnfcnff")
             rs = items.value?.results!!.toMutableList()
         }
-
         for(i in 0 until rs.size) {
+            print("saadhvi " + rs[i].cell + " " + cell + "\n")
             if (rs[i].cell == cell) {
                 rs[i].status = "Accepted"
+                print("saadhvi " +rs[i].status + "\n")
                 break
             }
         }
-
         database.resultDao.update(rs)
     }
 
     suspend fun setStatusDeclined(cell: String){
-
         if(rs.isEmpty()){
+            print("vgvgchnfcnff")
             rs = items.value?.results!!.toMutableList()
         }
-
         for(i in 0 until rs.size) {
             if (rs[i].cell == cell) {
                 rs[i].status = "Declined"

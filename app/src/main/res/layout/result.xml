@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="result"
             type="com.example.tinder_api.database.room.model.Result" />
@@ -34,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.891"
-            app:set_text="@{result}" />
+            app:set_text="@{result.status}"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -59,7 +60,8 @@
                 android:layout_margin="20dp"
                 android:onClick="@{() -> clickListener.onClick(result)}"
                 android:text="Accept"
-                app:set_status="@{result}" />
+                app:set_status="@{result.status}" />
+
 
             <Button
                 android:id="@+id/decline"
@@ -68,7 +70,7 @@
                 android:layout_margin="20dp"
                 android:onClick="@{() -> clickListener2.onClick(result)}"
                 android:text="Decline"
-                app:set_status="@{result}" />
+                app:set_status="@{result.status}" />
 
         </LinearLayout>
 

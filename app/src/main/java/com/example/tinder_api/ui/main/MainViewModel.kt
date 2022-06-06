@@ -43,7 +43,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onDeclineClicked(result: Result){
-
         viewModelScope.launch() {
             itemsRepository.setStatusDeclined(result.cell)
         }

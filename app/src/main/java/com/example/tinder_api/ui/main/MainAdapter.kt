@@ -1,6 +1,7 @@
 package com.example.tinder_api.ui.main
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,6 +12,7 @@ import com.example.tinder_api.database.room.model.Id
 import com.example.tinder_api.database.room.model.Name
 import com.example.tinder_api.database.room.model.Result
 import com.example.tinder_api.databinding.ResultBinding
+import com.squareup.picasso.Picasso
 
 class MainAdapter(val clickListener: ResultListener, val clickListener2: ResultListener) : ListAdapter<Result,
         MainAdapter.ViewHolder>(ResultDiffCallback()) {
@@ -33,11 +35,11 @@ class MainAdapter(val clickListener: ResultListener, val clickListener2: ResultL
         fun bind(result: Result) {
            var imageUrl = result.picture.large
 
-           binding.statusView.text = result.status
+            Picasso.get().load(imageUrl).into(binding.imageView);
 
-            Glide.with(binding.root)
-                .load(imageUrl)
-                .into(binding.imageView);
+//            Glide.with(binding.root)
+//                .load(imageUrl)
+//                .into(binding.imageView);
         }
 
         fun bind(clickListener: ResultListener, clickListener2: ResultListener, item: Result) {
