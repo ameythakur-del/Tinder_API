@@ -1,17 +1,18 @@
 package com.example.tinder_api.database.repository
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.tinder_api.database.network.ResultsApi
 import com.example.tinder_api.database.room.ItemsDatabase
 import com.example.tinder_api.database.room.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.internal.wait
+import java.util.concurrent.Executor
 
 class Repository(private val database: ItemsDatabase){
 
-    var items = database.resultDao.get()
+    var items : LiveData<Item> = database.resultDao.get()
     var rs : MutableList<Result> = mutableListOf()
 
     suspend fun refreshItems() {
@@ -53,24 +54,24 @@ class Repository(private val database: ItemsDatabase){
 
 
     suspend fun setStatusAccepted(cell: String){
-        if(rs.isEmpty()){
-            print("vgvgchnfcnff")
-            rs = items.value?.results!!.toMutableList()
-        }
-        for(i in 0 until rs.size) {
-            print("saadhvi " + rs[i].cell + " " + cell + "\n")
-            if (rs[i].cell == cell) {
-                rs[i].status = "Accepted"
-                print("saadhvi " +rs[i].status + "\n")
-                break
+        withContext(Dispatchers.IO) {
+            if (rs.isEmpty()) {
+                rs = items.value?.results!!.toMutableList()
             }
+            for (i in 0 until rs.size) {
+                if (rs[i].cell == cell) {
+                    rs[i].status = "Accepted"
+                    break
+                }
+            }
+
+            items.value!!.results = rs
+            database.resultDao.update(rs)
         }
-        database.resultDao.update(rs)
     }
 
     suspend fun setStatusDeclined(cell: String){
         if(rs.isEmpty()){
-            print("vgvgchnfcnff")
             rs = items.value?.results!!.toMutableList()
         }
         for(i in 0 until rs.size) {
@@ -79,6 +80,7 @@ class Repository(private val database: ItemsDatabase){
                 break
             }
         }
+        items.value!!.results = rs
         database.resultDao.update(rs)
     }
 }

@@ -12,6 +12,7 @@ import com.example.tinder_api.database.room.model.Result
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import java.lang.reflect.Array.get
+import java.util.*
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
