@@ -1,5 +1,7 @@
 package com.example.tinder_api.database.repository
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tinder_api.database.network.ResultsApi
@@ -12,15 +14,13 @@ import java.util.concurrent.Executor
 
 class Repository(private val database: ItemsDatabase){
 
-    var items : LiveData<Item> = database.resultDao.get()
+    var items : MutableLiveData<List<Result>> = MutableLiveData<List<Result>>(database.resultDao.get())
     var rs : MutableList<Result> = mutableListOf()
 
     suspend fun refreshItems() {
         withContext(Dispatchers.IO) {
 
             var item = ResultsApi.retrofitService.getResults().await()
-
-            var info = Info(item.info.page, item.info.results, item.info.seed, item.info.version)
 
             for (i in 0 until item.results.size){
                 var thisDob = Dob(item.results[i].dob.age, item.results[i].dob.date)
@@ -41,46 +41,37 @@ class Repository(private val database: ItemsDatabase){
                 rs.add(result)
             }
 
-            var finalItem = Item(info, rs)
+//            Log.d(TAG, "sharada: " + items.value.toString())
 
-            if(items.value == null) {
-                database.resultDao.insertAll(finalItem)
+            if(!items.value!!.isEmpty()) {
+                database.resultDao.delete()
             }
-            else{
-                database.resultDao.update(rs)
-            }
+
+            database.resultDao.insertAll(rs)
         }
+        items.value = rs
     }
 
 
-    suspend fun setStatusAccepted(cell: String){
+    suspend fun setStatusAccepted(email: String){
         withContext(Dispatchers.IO) {
             if (rs.isEmpty()) {
-                rs = items.value?.results!!.toMutableList()
+                print("vgvgchnfcnff")
+                rs = items.value!!.toMutableList()
             }
-            for (i in 0 until rs.size) {
-                if (rs[i].cell == cell) {
-                    rs[i].status = "Accepted"
-                    break
-                }
-            }
-
-            items.value!!.results = rs
-            database.resultDao.update(rs)
+            database.resultDao.updateStatus("Accepted", email)
         }
+        items.value = database.resultDao.get()
     }
 
-    suspend fun setStatusDeclined(cell: String){
-        if(rs.isEmpty()){
-            rs = items.value?.results!!.toMutableList()
-        }
-        for(i in 0 until rs.size) {
-            if (rs[i].cell == cell) {
-                rs[i].status = "Declined"
-                break
+    suspend fun setStatusDeclined(email: String){
+        withContext(Dispatchers.IO) {
+            if (rs.isEmpty()) {
+                print("vgvgchnfcnff")
+                rs = items.value!!.toMutableList()
             }
+            database.resultDao.updateStatus("Declined", email)
         }
-        items.value!!.results = rs
-        database.resultDao.update(rs)
+        items.value = database.resultDao.get()
     }
 }

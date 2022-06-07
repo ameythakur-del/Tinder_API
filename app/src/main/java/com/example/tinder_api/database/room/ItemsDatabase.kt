@@ -10,7 +10,7 @@ import com.example.tinder_api.database.room.model.*
 import com.example.tinder_api.database.room.typeConverter.ResultConverter
 
 @Database(entities = [
-    Coordinates::class, Dob::class, Id::class, Info::class, Location::class, Item::class,
+    Coordinates::class, Dob::class, Id::class, Info::class, Location::class,
     Login::class, Name::class, Picture::class, Registered::class, Result::class, Street::class, Timezone::class,], version = 3, exportSchema = false)
 
 @TypeConverters(ResultConverter::class)
@@ -27,7 +27,7 @@ import com.example.tinder_api.database.room.typeConverter.ResultConverter
                 if (!::INSTANCE.isInitialized) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                         ItemsDatabase::class.java,
-                        "videos").allowMainThreadQueries().fallbackToDestructiveMigration().build()
+                        "items").allowMainThreadQueries().fallbackToDestructiveMigration().build()
                 }
             }
             return INSTANCE

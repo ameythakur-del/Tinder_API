@@ -1,22 +1,24 @@
 package com.example.tinder_api.database.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.tinder_api.database.network.responses.ResultsResponse
-import com.example.tinder_api.database.room.model.Item
 import com.example.tinder_api.database.room.model.Name
 import com.example.tinder_api.database.room.model.Result
-import kotlinx.coroutines.Deferred
 
 @Dao
 interface ResultDao {
 
-    @Query("SELECT * from items")
-    fun get(): LiveData<Item>
+    @Query("SELECT * from results")
+    fun get(): List<Result>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg item: Item)
+    suspend fun insertAll(results: List<Result>)
 
-    @Query("UPDATE items SET results = :res")
-    suspend fun update(res: List<Result>)
+    @Update
+    suspend fun update(results: List<Result>)
+
+    @Query("UPDATE Results SET status = :st where email = :em")
+    suspend fun updateStatus(st: String, em: String)
+
+    @Query("DELETE from results")
+    suspend fun delete()
 }

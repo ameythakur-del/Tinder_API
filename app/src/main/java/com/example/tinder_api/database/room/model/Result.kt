@@ -11,6 +11,7 @@ data class Result(
     @Embedded
     var dob: Dob,
 
+    @PrimaryKey(autoGenerate = false)
     val email: String,
     val gender: String,
 
@@ -23,7 +24,6 @@ data class Result(
     @Embedded
     val login: Login,
 
-    @PrimaryKey(autoGenerate = false)
     @Embedded
     val name: Name,
     val nat: String,

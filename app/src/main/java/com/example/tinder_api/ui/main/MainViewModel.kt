@@ -1,17 +1,12 @@
 package com.example.tinder_api.ui.main
 
 import android.app.Application
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.tinder_api.database.repository.Repository
 import com.example.tinder_api.database.room.ItemsDatabase
-import com.example.tinder_api.database.room.model.Item
-import com.example.tinder_api.database.room.model.Name
 import com.example.tinder_api.database.room.model.Result
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import java.lang.reflect.Array.get
 import java.util.*
 
 
@@ -35,17 +30,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    var playlist: LiveData<Item> = itemsRepository.items
+    var playlist: MutableLiveData<List<Result>> = itemsRepository.items
 
     fun onAcceptClicked(result: Result){
         viewModelScope.launch() {
-            itemsRepository.setStatusAccepted(result.cell)
+            itemsRepository.setStatusAccepted(result.email)
         }
     }
 
     fun onDeclineClicked(result: Result){
         viewModelScope.launch() {
-            itemsRepository.setStatusDeclined(result.cell)
+            itemsRepository.setStatusDeclined(result.email)
         }
     }
 }

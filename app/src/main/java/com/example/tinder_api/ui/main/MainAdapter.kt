@@ -36,6 +36,10 @@ class MainAdapter(val clickListener: ResultListener, val clickListener2: ResultL
            var imageUrl = result.picture.large
 
             Picasso.get().load(imageUrl).into(binding.imageView);
+
+//            Glide.with(binding.root)
+//                .load(imageUrl)
+//                .into(binding.imageView);
         }
 
         fun bind(clickListener: ResultListener, clickListener2: ResultListener, item: Result) {

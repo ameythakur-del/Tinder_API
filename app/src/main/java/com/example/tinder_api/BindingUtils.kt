@@ -20,6 +20,7 @@ import org.xmlpull.v1.XmlPullParser.TEXT
 
 @BindingAdapter("set_status")
 fun Button.setStatus(status: String) {
+    print("dsewq setStatus Called\n")
     status.let {
         text = when (status) {
             ACCEPTED, DECLINED -> {
@@ -36,6 +37,7 @@ fun Button.setStatus(status: String) {
 
 @BindingAdapter("set_text")
 fun TextView.setText(status: String) {
+    print("dsewq setText Called\n")
     status.let {
         if(status != "null"){
             visibility = View.VISIBLE
