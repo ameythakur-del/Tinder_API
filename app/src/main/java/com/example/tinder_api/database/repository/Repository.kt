@@ -41,7 +41,6 @@ class Repository(private val database: ItemsDatabase){
                 rs.add(result)
             }
 
-//            Log.d(TAG, "sharada: " + items.value.toString())
 
             if(!items.value!!.isEmpty()) {
                 database.resultDao.delete()
@@ -56,7 +55,6 @@ class Repository(private val database: ItemsDatabase){
     suspend fun setStatusAccepted(email: String){
         withContext(Dispatchers.IO) {
             if (rs.isEmpty()) {
-                print("vgvgchnfcnff")
                 rs = items.value!!.toMutableList()
             }
             database.resultDao.updateStatus("Accepted", email)
@@ -67,7 +65,6 @@ class Repository(private val database: ItemsDatabase){
     suspend fun setStatusDeclined(email: String){
         withContext(Dispatchers.IO) {
             if (rs.isEmpty()) {
-                print("vgvgchnfcnff")
                 rs = items.value!!.toMutableList()
             }
             database.resultDao.updateStatus("Declined", email)

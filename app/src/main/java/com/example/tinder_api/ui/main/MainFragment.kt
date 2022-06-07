@@ -46,7 +46,6 @@ class MainFragment : Fragment() {
 
         viewModel.playlist.observe(viewLifecycleOwner, Observer {
             it?.let {
-                print("Paaus Ala")
                 adapter.submitList(it)
             }
         })
